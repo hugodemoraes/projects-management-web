@@ -23,7 +23,7 @@
         "rootPathSuffix": "src"
       },
       "alias": {
-        "map": [["@components", "./src/components"]],
+        "map": [["@pages", "./src/pages"]],
         "extensions": [".ts", ".js", ".jsx", ".json"]
       }
     }

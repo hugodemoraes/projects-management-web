@@ -1,9 +1,6 @@
 import React from 'react';
+import Routes from './routes/routes';
 
-const App = () => (
-  <div>
-    <h1>Omnistack - FrontEnd</h1>
-  </div>
-);
+const App = () => <Routes />;
 
 export default App;
