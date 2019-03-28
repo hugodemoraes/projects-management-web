@@ -14,8 +14,8 @@ export default Creators;
 /* Initial State */
 
 export const INITIAL_STATE = Immutable({
-  signedIn: false,
-  token: null,
+  signedIn: !!localStorage.getItem('@PMWeb:token'),
+  token: localStorage.getItem('@PMWeb:token') || null,
 });
 
 /* Reducers */
