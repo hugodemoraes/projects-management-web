@@ -23,3 +23,20 @@ export function* signIn({ email, password }) {
     );
   }
 }
+
+export function* signOut() {
+  try {
+    localStorage.removeItem('@PMWeb:token');
+    localStorage.removeItem('@PMWeb:team');
+
+    yield put(push('/signin'));
+  } catch (error) {
+    yield put(
+      toastrActions.add({
+        type: 'error',
+        title: 'Erro na operação',
+        message: 'Tente novamente.',
+      }),
+    );
+  }
+}

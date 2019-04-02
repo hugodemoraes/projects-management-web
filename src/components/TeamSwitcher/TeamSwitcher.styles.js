@@ -43,7 +43,6 @@ export const NewTeam = styled.button`
   margin: 0 0 8px;
   background: transparent;
   font-weight: bold;
-  font-size: 26px;
   transition: all 0.2s;
   &:hover {
     border: 1px dashed rgba(255, 255, 255, 0.6);

@@ -6,10 +6,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import TeamsActions from '~/store/ducks/teams';
+import AuthActions from '~/store/ducks/auth';
 
 import { Modal, Button } from '@components';
 import {
-  Container, TeamList, Team, Avatar, NewTeam,
+  Container, TeamList, Team, Avatar, NewTeam, Logout,
 } from './TeamSwitcher.styles';
 
 class TeamSwitcher extends Component {
@@ -46,11 +47,11 @@ class TeamSwitcher extends Component {
     const { newTeam } = this.state;
 
     createTeamRequest(newTeam);
-  }
+  };
 
   render() {
     const {
-      teams: { data: teams, teamModalOpened },
+      teams: { data: teams, teamModalOpened }, signOut,
     } = this.props;
     const { newTeam } = this.state;
 
@@ -68,7 +69,7 @@ class TeamSwitcher extends Component {
             </Team>
           ))}
 
-          <NewTeam onClick={() => this.handleToggleTeamModal(true)}>+</NewTeam>
+          <NewTeam onClick={() => this.handleToggleTeamModal(true)}>NOVO</NewTeam>
 
           {teamModalOpened && (
             <Modal>
@@ -92,6 +93,8 @@ class TeamSwitcher extends Component {
             </Modal>
           )}
         </TeamList>
+
+        <Logout onClick={signOut}>SAIR</Logout>
       </Container>
     );
   }
@@ -102,6 +105,7 @@ TeamSwitcher.propTypes = {
   selectTeam: func,
   toggleTeamModal: func,
   createTeamRequest: func,
+  signOut: func,
   teams: shape({
     data: arrayOf(
       shape({
@@ -117,6 +121,7 @@ TeamSwitcher.defaultProps = {
   selectTeam: () => null,
   toggleTeamModal: () => null,
   createTeamRequest: () => null,
+  signOut: () => null,
   teams: {
     data: [
       {
@@ -131,7 +136,13 @@ const mapStateToProps = ({ teams }) => ({
   teams,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(TeamsActions, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(
+  {
+    ...TeamsActions,
+    ...AuthActions,
+  },
+  dispatch,
+);
 
 export default connect(
   mapStateToProps,
