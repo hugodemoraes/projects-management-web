@@ -18,6 +18,12 @@ class TeamSwitcher extends Component {
     getTeamsRequest();
   }
 
+  handleTeamSelect = (team) => {
+    const { selectTeam } = this.props;
+
+    selectTeam(team);
+  };
+
   render() {
     const {
       teams: { data: teams },
@@ -27,7 +33,7 @@ class TeamSwitcher extends Component {
       <Container>
         <TeamList>
           {teams.map(team => (
-            <Team key={team.id}>
+            <Team key={team.id} onClick={() => this.handleTeamSelect(team)}>
               <Avatar
                 alt={team.name}
                 src={`https://ui-avatars.com/api/?font-size=0.33&background=7159C1&color=fff&name=${
@@ -44,22 +50,28 @@ class TeamSwitcher extends Component {
 
 TeamSwitcher.propTypes = {
   getTeamsRequest: func,
-  teams: arrayOf(
-    shape({
-      id: number,
-      name: string,
-    }),
-  ),
+  selectTeam: func,
+  teams: shape({
+    data: arrayOf(
+      shape({
+        id: number,
+        name: string,
+      }),
+    ),
+  }),
 };
 
 TeamSwitcher.defaultProps = {
   getTeamsRequest: () => null,
-  teams: [
-    {
-      id: 0,
-      name: '',
-    },
-  ],
+  selectTeam: () => null,
+  teams: {
+    data: [
+      {
+        id: 0,
+        name: '',
+      },
+    ],
+  },
 };
 
 const mapStateToProps = ({ teams }) => ({
