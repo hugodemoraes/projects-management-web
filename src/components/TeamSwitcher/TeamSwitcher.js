@@ -7,11 +7,16 @@ import { bindActionCreators } from 'redux';
 
 import TeamsActions from '~/store/ducks/teams';
 
+import { Modal, Button } from '@components';
 import {
-  Container, TeamList, Team, Avatar,
+  Container, TeamList, Team, Avatar, NewTeam,
 } from './TeamSwitcher.styles';
 
 class TeamSwitcher extends Component {
+  state = {
+    newTeam: '',
+  };
+
   componentDidMount() {
     const { getTeamsRequest } = this.props;
 
@@ -24,10 +29,30 @@ class TeamSwitcher extends Component {
     selectTeam(team);
   };
 
+  handleToggleTeamModal = (active) => {
+    const { toggleTeamModal } = this.props;
+
+    toggleTeamModal(active);
+  };
+
+  handleInputChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  handleCreateTeam = (e) => {
+    e.preventDefault();
+
+    const { createTeamRequest } = this.props;
+    const { newTeam } = this.state;
+
+    createTeamRequest(newTeam);
+  }
+
   render() {
     const {
-      teams: { data: teams },
+      teams: { data: teams, teamModalOpened },
     } = this.props;
+    const { newTeam } = this.state;
 
     return (
       <Container>
@@ -42,6 +67,30 @@ class TeamSwitcher extends Component {
               />
             </Team>
           ))}
+
+          <NewTeam onClick={() => this.handleToggleTeamModal(true)}>+</NewTeam>
+
+          {teamModalOpened && (
+            <Modal>
+              <h1>Criar time</h1>
+              <form onSubmit={this.handleCreateTeam}>
+                <span>NOME</span>
+                <input
+                  name="newTeam"
+                  placeholder="Digite o nome do time"
+                  value={newTeam}
+                  onChange={this.handleInputChange}
+                />
+
+                <Button size="big" type="submit">
+                  Salvar
+                </Button>
+                <Button size="small" color="gray" onClick={() => this.handleToggleTeamModal(false)}>
+                  Cancelar
+                </Button>
+              </form>
+            </Modal>
+          )}
         </TeamList>
       </Container>
     );
@@ -51,6 +100,8 @@ class TeamSwitcher extends Component {
 TeamSwitcher.propTypes = {
   getTeamsRequest: func,
   selectTeam: func,
+  toggleTeamModal: func,
+  createTeamRequest: func,
   teams: shape({
     data: arrayOf(
       shape({
@@ -64,6 +115,8 @@ TeamSwitcher.propTypes = {
 TeamSwitcher.defaultProps = {
   getTeamsRequest: () => null,
   selectTeam: () => null,
+  toggleTeamModal: () => null,
+  createTeamRequest: () => null,
   teams: {
     data: [
       {

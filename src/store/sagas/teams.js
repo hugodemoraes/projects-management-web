@@ -19,3 +19,20 @@ export function* getTeams() {
     );
   }
 }
+
+export function* createTeam({ name }) {
+  try {
+    const { data } = yield call(api.post, 'teams', { name });
+
+    yield put(TeamsActions.createTeamSuccess(data));
+    yield put(TeamsActions.toggleTeamModal(false));
+  } catch (error) {
+    yield put(
+      toastrActions.add({
+        type: 'error',
+        title: 'Falha ao criar time',
+        message: 'Houve um erro ao criar seu time, tente novamente!',
+      }),
+    );
+  }
+}
