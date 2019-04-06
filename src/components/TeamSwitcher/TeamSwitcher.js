@@ -30,7 +30,7 @@ class TeamSwitcher extends Component {
     selectTeam(team);
   };
 
-  handleToggleTeamModal = (active) => {
+  handleToggleTeamModal = (active = true) => {
     const { toggleTeamModal } = this.props;
 
     toggleTeamModal(active);
@@ -47,11 +47,14 @@ class TeamSwitcher extends Component {
     const { newTeam } = this.state;
 
     createTeamRequest(newTeam);
+
+    this.setState({ newTeam: '' });
   };
 
   render() {
     const {
-      teams: { data: teams, teamModalOpened }, signOut,
+      teams: { data: teams, teamModalOpened },
+      signOut,
     } = this.props;
     const { newTeam } = this.state;
 
@@ -69,7 +72,7 @@ class TeamSwitcher extends Component {
             </Team>
           ))}
 
-          <NewTeam onClick={() => this.handleToggleTeamModal(true)}>NOVO</NewTeam>
+          <NewTeam onClick={() => this.handleToggleTeamModal()}>NOVO</NewTeam>
 
           {teamModalOpened && (
             <Modal>

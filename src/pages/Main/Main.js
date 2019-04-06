@@ -1,12 +1,13 @@
 import React from 'react';
 
-import { TeamSwitcher } from '@components';
+import { TeamSwitcher, Projects } from '@components';
 
 import { Container } from './Main.styles';
 
 const Main = () => (
   <Container>
     <TeamSwitcher />
+    <Projects />
   </Container>
 );
 

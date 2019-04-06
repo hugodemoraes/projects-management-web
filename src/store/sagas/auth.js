@@ -26,8 +26,8 @@ export function* signIn({ email, password }) {
 
 export function* signOut() {
   try {
-    localStorage.removeItem('@PMWeb:token');
     localStorage.removeItem('@PMWeb:team');
+    localStorage.removeItem('@PMWeb:token');
 
     yield put(push('/signin'));
   } catch (error) {

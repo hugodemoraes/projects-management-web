@@ -30,7 +30,7 @@ export const getSuccess = (state, { data }) => state.merge({ data });
 export const selectTeam = (state, { team }) => {
   localStorage.setItem('@PMWeb:team', JSON.stringify(team));
 
-  return state.merge({ active: team.id });
+  return state.merge({ active: team });
 };
 
 export const toggleTeamModal = (state, { teamModalOpened }) => state.merge({ teamModalOpened });
