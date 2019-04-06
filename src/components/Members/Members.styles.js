@@ -18,7 +18,7 @@ export const MemberListItem = styled.li`
   }
 
   > div {
-    width: 320px;
+    width: 400px;
     color: ${doveGray};
   }
 `;
